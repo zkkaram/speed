@@ -23,7 +23,6 @@ def setup_environment():
     print("Environment set up")
 
 # Main helper script (paceboard.py combined with others)
-import subprocess
 import os
 
 def generate():
@@ -42,43 +41,4 @@ def optionAddCategory():
     """Add category"""
     add_category()
 
-def optionAddRun():
-    """Add run"""
-    add_run()
-
-def optionQuit():
-    """Quit"""
-    print()
-    os._exit(1)
-
-# If no setup completed, run setup script
-config = util_csv.dictReaderFirstRow("csv/config.csv")
-if len(config) == 0:
-    optionSetup()
-    generate()
-
-# Set options (functions as defined earlier)
-options = [optionSetup, optionAddCategory, optionAddRun, optionQuit]
-
-# Main loop and input handler
-while True:
-    key = "tk_game_name"
-    config = util_csv.dictReaderFirstRow("csv/config.csv")
-    print(f"\n[ paceboard for {config[key]} ]")
-    index = 0
-    for option in options:
-        print(f"{index + 1} - {options[index].__doc__}")
-        index += 1
-    try:
-        try:
-            rawOptionInput = input("Your pick:  ")
-        except KeyboardInterrupt:
-            os._exit(1)
-        optionInput = int(rawOptionInput)
-        if 0 < optionInput <= len(options):
-            options[optionInput - 1]()
-            generate()
-        else:
-            print("Not a valid choice!")
-    except:
-        print("Not a valid choice!")
+def
