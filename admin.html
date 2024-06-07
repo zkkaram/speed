@@ -15,9 +15,22 @@
 </head>
 <body>
     <script type="py" src="./paceboard.py" config="./pyscript.toml" terminal></script>
-    <script type="py" src="./scripts/add-run.py" config="./pyscript.toml" terminal></script>
+    <script type="py">
+        import sys
+        sys.path.append("/scripts")
+
+        from add_run import some_function  # adjust import based on actual function
+        from generate import some_function  # adjust import based on actual function
+        from setup import some_function  # adjust import based on actual function
+
+        # Example usage of the imported functions
+        some_function()
+    </script>
+
+<!--     <script type="py" src="./scripts/add-run.py" config="./pyscript.toml" terminal></script>
     <script type="py" src="./scripts/generate.py" config="./pyscript.toml" terminal></script>
-    <script type="py" src="./scripts/setup.py" config="./pyscript.toml" terminal></script>
+    <script type="py" src="./scripts/setup.py" config="./pyscript.toml" terminal></script> -->
+
 
 </body>
 </html>
