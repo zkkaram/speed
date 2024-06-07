@@ -24,6 +24,7 @@ def setup_environment():
 
 # Main helper script (paceboard.py combined with others)
 import os
+from pyscript import display, Element
 
 def generate():
     """Regenerate site"""
@@ -58,7 +59,6 @@ def optionQuit():
     os._exit(1)
 
 def display_output(message):
-    from pyscript import display, Element
     display(message)
     Element("output").element.innerHTML += f"<p>{message}</p>"
 
