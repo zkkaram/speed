@@ -14,6 +14,84 @@
     <script type="module" src="https://pyscript.net/releases/2024.5.2/core.js"></script>
 </head>
 <body>
+    <h1>Gens Speed Admin</h1>
+    <div id="output"></div>
+    <div id="options"></div>
+
     <script type="py" src="./base.py" config="./pyscript.toml" terminal></script>
+
+    <script type="py">
+        import js
+        from pyodide.ffi import to_js
+
+        # Mock implementation for util_csv (utils/csv.py)
+        class util_csv:
+            @staticmethod
+            def dictReaderFirstRow(path):
+                return {"tk_game_name": "Sample Game"}  # Example data
+
+        # add-category.py
+        def add_category():
+            update_output("Category added")
+
+        # add-run.py
+        def add_run():
+            update_output("Run added")
+
+        # generate.py
+        def generate_report():
+            update_output("Report generated")
+
+        # setup.py
+        def setup_environment():
+            update_output("Environment set up")
+
+        def update_output(text):
+            output_element = js.document.getElementById("output")
+            output_element.innerHTML = text
+
+        def generate():
+            runIdName = "tk_run_id"
+            categoryIdName = "tk_category_dashname"
+            config = util_csv.dictReaderFirstRow("csv/config.csv")
+            if len(config) != 0:
+                generate_report()
+
+        def optionSetup():
+            setup_environment()
+
+        def optionAddCategory():
+            add_category()
+
+        def optionAddRun():
+            add_run()
+
+        def optionQuit():
+            update_output("Quitting...")
+            js.window.close()
+
+        config = util_csv.dictReaderFirstRow("csv/config.csv")
+        if len(config) == 0:
+            optionSetup()
+            generate()
+
+        options = [
+            {"func": optionSetup, "label": "Reconfigure site details"},
+            {"func": optionAddCategory, "label": "Add category"},
+            {"func": optionAddRun, "label": "Add run"},
+            {"func": optionQuit, "label": "Quit"},
+        ]
+
+        def create_buttons():
+            options_div = js.document.getElementById("options")
+            options_div.innerHTML = ""
+            for index, option in enumerate(options):
+                button = js.document.createElement("button")
+                button.innerHTML = f"{index + 1} - {option['label']}"
+                button.onclick = to_js(option["func"])
+                options_div.appendChild(button)
+
+        create_buttons()
+    </script>
 </body>
 </html>
