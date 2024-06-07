@@ -17,14 +17,18 @@
     <script type="py" src="./paceboard.py" config="./pyscript.toml" terminal></script>
     <script type="py">
         import sys
-        sys.path.append("/scripts")
+        sys.path.append("./scripts")
 
-        from add_run import some_function  # adjust import based on actual function
-        from generate import some_function  # adjust import based on actual function
-        from setup import some_function  # adjust import based on actual function
+        from add_run import add_run
+        from generate import generate_report
+        from setup import setup_environment
+        from add_category import add_category
 
         # Example usage of the imported functions
-        some_function()
+        add_run()
+        generate_report()
+        setup_environment()
+        add_category()
     </script>
 
 <!--     <script type="py" src="./scripts/add-run.py" config="./pyscript.toml" terminal></script>
