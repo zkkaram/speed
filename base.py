@@ -81,11 +81,13 @@ def display_options():
 display_options()
 
 def submitChoice(event=None):
+    display_output("Submit button clicked")  # Debugging statement
     try:
         rawOptionInput = document.getElementById("userInput").value
+        display_output(f"User input: {rawOptionInput}")  # Debugging statement
         optionInput = int(rawOptionInput)
         if 0 < optionInput <= len(options):
-            display_output(f"Executing option {optionInput}...")
+            display_output(f"Executing option {optionInput}...")  # Debugging statement
             options[optionInput - 1]()
         else:
             display_output("Not a valid choice!")
@@ -96,6 +98,9 @@ def submitChoice(event=None):
         os._exit(1)
 
 # Bind the submitChoice function to the button click
-document.getElementById("submitButton").addEventListener("click", submitChoice)
-document.getElementById("userInput").addEventListener("keydown", lambda event: submitChoice() if event.key == "Enter" else None)
-document.getElementById("userInput").focus()
+submit_button = document.getElementById("submitButton")
+submit_button.addEventListener("click", submitChoice)
+
+input_element = document.getElementById("userInput")
+input_element.addEventListener("keydown", lambda event: submitChoice() if event.key == "Enter" else None)
+input_element.focus()
