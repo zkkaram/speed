@@ -24,7 +24,6 @@ def setup_environment():
 
 # Main helper script (paceboard.py combined with others)
 import os
-import threading
 
 def generate():
     """Regenerate site"""
@@ -37,28 +36,27 @@ def generate():
 def optionSetup():
     """Reconfigure site details"""
     setup_environment()
+    generate()
 
 def optionAddCategory():
     """Add category"""
     add_category()
+    generate()
 
 def optionAddRun():
     """Add run"""
     add_run()
+    generate()
 
 def optionQuit():
     """Quit"""
     print()
     os._exit(1)
 
-def worker(task):
-    task()
-
 # If no setup completed, run setup script
 config = util_csv.dictReaderFirstRow("csv/config.csv")
 if len(config) == 0:
     optionSetup()
-    generate()
 
 # Set options (functions as defined earlier)
 options = [optionSetup, optionAddCategory, optionAddRun, optionQuit]
@@ -74,14 +72,7 @@ while True:
         rawOptionInput = input("Your pick:  ")
         optionInput = int(rawOptionInput)
         if 0 < optionInput <= len(options):
-            # Create a new thread to handle the task
-            task_thread = threading.Thread(target=worker, args=(options[optionInput - 1],))
-            task_thread.start()
-            task_thread.join()
-            if optionInput != 4:  # Don't call generate() if quitting
-                generate_thread = threading.Thread(target=worker, args=(generate,))
-                generate_thread.start()
-                generate_thread.join()
+            options[optionInput - 1]()
         else:
             print("Not a valid choice!")
     except ValueError:
