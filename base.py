@@ -77,10 +77,11 @@ while True:
             # Create a new thread to handle the task
             task_thread = threading.Thread(target=worker, args=(options[optionInput - 1],))
             task_thread.start()
+            task_thread.join()
             if optionInput != 4:  # Don't call generate() if quitting
                 generate_thread = threading.Thread(target=worker, args=(generate,))
                 generate_thread.start()
-            task_thread.join()
+                generate_thread.join()
         else:
             print("Not a valid choice!")
     except ValueError:
