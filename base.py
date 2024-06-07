@@ -25,6 +25,7 @@ def setup_environment():
 # Main helper script (paceboard.py combined with others)
 import os
 from js import document
+from pyodide.ffi import create_proxy
 
 def generate():
     """Regenerate site"""
@@ -97,10 +98,10 @@ def submitChoice(event=None):
         display_output("\nProcess interrupted. Exiting...")
         os._exit(1)
 
-# Bind the submitChoice function to the button click
+# Bind the submitChoice function to the button click using create_proxy
 submit_button = document.getElementById("submitButton")
-submit_button.addEventListener("click", submitChoice)
+submit_button.addEventListener("click", create_proxy(submitChoice))
 
 input_element = document.getElementById("userInput")
-input_element.addEventListener("keydown", lambda event: submitChoice() if event.key == "Enter" else None)
+input_element.addEventListener("keydown", create_proxy(lambda event: submitChoice() if event.key == "Enter" else None))
 input_element.focus()
