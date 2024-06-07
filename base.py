@@ -71,26 +71,30 @@ if len(config) == 0:
 # Set options (functions as defined earlier)
 options = [optionSetup, optionAddCategory, optionAddRun, optionQuit]
 
-# Main loop and input handler
-def main():
-    while True:
-        key = "tk_game_name"
-        config = util_csv.dictReaderFirstRow("csv/config.csv")
-        display_output(f"\n[ paceboard for {config[key]} ]")
-        for index, option in enumerate(options):
-            display_output(f"{index + 1} - {option.__doc__}")
-        try:
-            rawOptionInput = input("Your pick:  ")
-            optionInput = int(rawOptionInput)
-            if 0 < optionInput <= len(options):
-                display_output(f"Executing option {optionInput}...")
-                options[optionInput - 1]()
-            else:
-                display_output("Not a valid choice!")
-        except ValueError:
-            display_output("Not a valid choice! Please enter a number.")
-        except KeyboardInterrupt:
-            display_output("\nProcess interrupted. Exiting...")
-            os._exit(1)
+def display_options():
+    key = "tk_game_name"
+    config = util_csv.dictReaderFirstRow("csv/config.csv")
+    display_output(f"\n[ paceboard for {config[key]} ]")
+    for index, option in enumerate(options):
+        display_output(f"{index + 1} - {option.__doc__}")
 
-main()
+display_options()
+
+def submitChoice():
+    try:
+        rawOptionInput = Element("userInput").element.value
+        optionInput = int(rawOptionInput)
+        if 0 < optionInput <= len(options):
+            display_output(f"Executing option {optionInput}...")
+            options[optionInput - 1]()
+        else:
+            display_output("Not a valid choice!")
+    except ValueError:
+        display_output("Not a valid choice! Please enter a number.")
+    except KeyboardInterrupt:
+        display_output("\nProcess interrupted. Exiting...")
+        os._exit(1)
+
+# Bind the submitChoice function to the button click
+Element("userInput").element.addEventListener("keydown", lambda event: submitChoice() if event.key == "Enter" else None)
+Element("userInput").element.focus()

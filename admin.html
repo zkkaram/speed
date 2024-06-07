@@ -2,22 +2,17 @@
 <html lang="en">
 <head>
     <title>Gens Admin</title>
-
-    <!-- Recommended meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-    <!-- PyScript CSS -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.5.2/core.css">
-
-    <!-- This script tag bootstraps PyScript -->
     <script type="module" src="https://pyscript.net/releases/2024.5.2/core.js"></script>
 </head>
 <body>
     <h1>Gens Speed Admin</h1>
     <div id="output"></div>
     <div id="options"></div>
-
-    <script type="py" src="./base.py" config="./pyscript.toml" terminal></script>
+    <input type="text" id="userInput" placeholder="Enter your choice">
+    <button onclick="submitChoice()">Submit</button>
+    <script type="py" src="./base.py" config="./pyscript.toml"></script>
 </body>
 </html>
