@@ -1,58 +1,46 @@
-# utils/csv.py
-class util_csv:
-    @staticmethod
-    def dictReaderFirstRow(path):
-        # Mock implementation for reading the first row of a CSV file
-        # This should be replaced with the actual code from utils/csv.py
-        return {"tk_game_name": "Sample Game"}  # Example data
+#!/usr/bin/env python3
+### Main helper script.
 
-# add-category.py
-def add_category():
-    print("Category added")
+import subprocess, os
+import scripts.utils.csv as util_csv
 
-# add-run.py
-def add_run():
-    print("Run added")
+# Change and get current working directory, for compatibility with standalone scripts
+os.chdir("scripts/")
+cwd = os.getcwd()
 
-# generate.py
-def generate_report():
-    print("Report generated")
-
-# setup.py
-def setup_environment():
-    print("Environment set up")
-
-# Main helper script (paceboard.py combined with others)
-import subprocess
-import os
 
 def generate():
     """Regenerate site"""
     runIdName = "tk_run_id"
     categoryIdName = "tk_category_dashname"
-    config = util_csv.dictReaderFirstRow("csv/config.csv")
+    config = util_csv.dictReaderFirstRow("../csv/config.csv")
     if len(config) != 0:
-        generate_report()
+        subprocess.call(cwd + "/generate.py", shell=True)
+
 
 def optionSetup():
     """Reconfigure site details"""
-    setup_environment()
+    subprocess.call(cwd + "/setup.py", shell=True)
+
 
 def optionAddCategory():
     """Add category"""
-    add_category()
+    subprocess.call(cwd + "/add-category.py", shell=True)
+
 
 def optionAddRun():
     """Add run"""
-    add_run()
+    subprocess.call(cwd + "/add-run.py", shell=True)
+
 
 def optionQuit():
     """Quit"""
     print()
     os._exit(1)
 
+
 # If no setup completed, run setup script
-config = util_csv.dictReaderFirstRow("csv/config.csv")
+config = util_csv.dictReaderFirstRow("../csv/config.csv")
 if len(config) == 0:
     optionSetup()
     generate()
@@ -63,7 +51,7 @@ options = [optionSetup, optionAddCategory, optionAddRun, optionQuit]
 # Main loop and input handler
 while True:
     key = "tk_game_name"
-    config = util_csv.dictReaderFirstRow("csv/config.csv")
+    config = util_csv.dictReaderFirstRow("../csv/config.csv")
     print(f"\n[ paceboard for {config[key]} ]")
     index = 0
     for option in options:

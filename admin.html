@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Gens Speed Admin</title>
+    <title>Gens Admin</title>
 
     <!-- Recommended meta tags -->
     <meta charset="UTF-8">
@@ -14,69 +14,6 @@
     <script type="module" src="https://pyscript.net/releases/2024.5.2/core.js"></script>
 </head>
 <body>
-    <h1>Gens Speed Admin</h1>
-    <div id="output"></div>
-    <div id="options"></div>
-
-    <script type="py">
-        import js
-        from pyodide.ffi import to_js
-
-        # Mocking util_csv functionality
-        class util_csv:
-            @staticmethod
-            def dictReaderFirstRow(path):
-                return {"tk_game_name": "Sample Game"}  # Mock data for testing
-
-        def update_output(text):
-            output_element = js.document.getElementById("output")
-            output_element.innerHTML = text
-
-        def generate():
-            """Regenerate site"""
-            update_output("Generating site...")  # Mocking subprocess call
-
-        def optionSetup():
-            """Reconfigure site details"""
-            update_output("Running setup...")  # Mocking subprocess call
-
-        def optionAddCategory():
-            """Add category"""
-            update_output("Adding category...")  # Mocking subprocess call
-
-        def optionAddRun():
-            """Add run"""
-            update_output("Adding run...")  # Mocking subprocess call
-
-        def optionQuit():
-            """Quit"""
-            update_output("Quitting...")
-            js.window.close()
-
-        # Initial setup check
-        config = util_csv.dictReaderFirstRow("config.csv")
-        if len(config) == 0:
-            optionSetup()
-            generate()
-
-        # Set options
-        options = [
-            {"func": optionSetup, "label": "Reconfigure site details"},
-            {"func": optionAddCategory, "label": "Add category"},
-            {"func": optionAddRun, "label": "Add run"},
-            {"func": optionQuit, "label": "Quit"},
-        ]
-
-        def create_buttons():
-            options_div = js.document.getElementById("options")
-            options_div.innerHTML = ""
-            for index, option in enumerate(options):
-                button = js.document.createElement("button")
-                button.innerHTML = f"{index + 1} - {option['label']}"
-                button.onclick = to_js(option["func"])
-                options_div.appendChild(button)
-
-        create_buttons()
-    </script>
+    <script type="py" src="./base.py" config="./pyscript.toml" terminal></script>
 </body>
 </html>
