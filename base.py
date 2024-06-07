@@ -24,7 +24,7 @@ def setup_environment():
 
 # Main helper script (paceboard.py combined with others)
 import os
-from pyscript import display
+from js import document
 
 def generate():
     """Regenerate site"""
@@ -59,7 +59,6 @@ def optionQuit():
     os._exit(1)
 
 def display_output(message):
-    display(message)
     output_element = document.getElementById("output")
     output_element.innerHTML += f"<p>{message}</p>"
 
@@ -81,7 +80,7 @@ def display_options():
 
 display_options()
 
-def submitChoice():
+def submitChoice(event=None):
     try:
         rawOptionInput = document.getElementById("userInput").value
         optionInput = int(rawOptionInput)
@@ -97,5 +96,6 @@ def submitChoice():
         os._exit(1)
 
 # Bind the submitChoice function to the button click
+document.getElementById("submitButton").addEventListener("click", submitChoice)
 document.getElementById("userInput").addEventListener("keydown", lambda event: submitChoice() if event.key == "Enter" else None)
 document.getElementById("userInput").focus()
