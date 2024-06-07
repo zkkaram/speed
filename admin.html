@@ -15,21 +15,34 @@
 </head>
 <body>
     <script type="py" src="./paceboard.py" config="./pyscript.toml" terminal></script>
+    <script type="module" src="https://pyscript.net/releases/2024.5.2/core.js"></script>
+</head>
+<body>
     <script type="py">
-        import sys
-        sys.path.append("./scripts")
+        # add-run.py content
+        def add_run():
+            print("Run added")
+        
+        # generate.py content
+        def generate_report():
+            print("Report generated")
+        
+        # setup.py content
+        def setup_environment():
+            print("Environment set up")
+        
+        # add-category.py content
+        def add_category():
+            print("Category added")
 
-        from add_run import add_run
-        from generate import generate_report
-        from setup import setup_environment
-        from add_category import add_category
-
-        # Example usage of the imported functions
+        # Example usage of the functions
         add_run()
         generate_report()
         setup_environment()
         add_category()
     </script>
+</body>
+</html>
 
 <!--     <script type="py" src="./scripts/add-run.py" config="./pyscript.toml" terminal></script>
     <script type="py" src="./scripts/generate.py" config="./pyscript.toml" terminal></script>
