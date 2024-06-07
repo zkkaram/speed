@@ -41,4 +41,41 @@ def optionAddCategory():
     """Add category"""
     add_category()
 
-def
+def optionAddRun():
+    """Add run"""
+    add_run()
+
+def optionQuit():
+    """Quit"""
+    print()
+    os._exit(1)
+
+# If no setup completed, run setup script
+config = util_csv.dictReaderFirstRow("csv/config.csv")
+if len(config) == 0:
+    optionSetup()
+    generate()
+
+# Set options (functions as defined earlier)
+options = [optionSetup, optionAddCategory, optionAddRun, optionQuit]
+
+# Main loop and input handler
+while True:
+    key = "tk_game_name"
+    config = util_csv.dictReaderFirstRow("csv/config.csv")
+    print(f"\n[ paceboard for {config[key]} ]")
+    for index, option in enumerate(options):
+        print(f"{index + 1} - {option.__doc__}")
+    try:
+        rawOptionInput = input("Your pick:  ")
+        optionInput = int(rawOptionInput)
+        if 0 < optionInput <= len(options):
+            options[optionInput - 1]()
+            if optionInput != 4:  # Don't call generate() if quitting
+                generate()
+        else:
+            print("Not a valid choice!")
+    except ValueError:
+        print("Not a valid choice!")
+    except KeyboardInterrupt:
+        os._exit(1)
